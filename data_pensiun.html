@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pensiun Pegawai</title>
+    <style>
+        /* CSS untuk Data Pensiun dengan desain yang lebih menarik */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1d2b64 0%, #f8cdda 100%); /* Gradasi warna background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .table-container {
+            width: 80%;
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparansi kotak */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px); /* Efek hover */
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Jarak antara tombol */
+            margin-top: 20px;
+        }
+
+        .nav-container a {
+            text-decoration: none;
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-container a:hover {
+            background-color: #45a049;
+            transform: translateY(-3px); /* Efek hover */
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 768px) {
+            .table-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 10px; /* Jarak tombol untuk tampilan vertikal */
+            }
+
+            .nav-container a {
+                width: 100%; /* Tombol menjadi full-width pada layar kecil */
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-container">
+        <h2>Data Pensiun Pegawai</h2>
+        <table id="dataPensiunTable">
+            <tr>
+                <th>Nama</th>
+                <th>NIP</th>
+                <th>Jabatan</th>
+                <th>Tahun Pensiun</th>
+                <th>Aksi</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="nav-container">
+        <a href="dashboard.html">Kembali ke Beranda</a>
+        <a href="input_data_pensiun.html">Input Data Pensiun</a>
+    </div>
+
+    <script>
+        // Ambil data dari LocalStorage
+        const dataPensiun = JSON.parse(localStorage.getItem('dataPensiun')) || [];
+
+        // Ambil tabel untuk menambahkan baris
+        const table = document.getElementById('dataPensiunTable');
+
+        // Fungsi untuk menyimpan ulang ke LocalStorage
+        function simpanData() {
+            localStorage.setItem('dataPensiun', JSON.stringify(dataPensiun));
+        }
+
+        // Fungsi untuk menghapus data
+        function hapusData(index) {
+            dataPensiun.splice(index, 1); // Hapus data dari array
+            simpanData(); // Simpan data yang sudah diperbarui ke LocalStorage
+            window.location.reload(); // Refresh halaman untuk menampilkan data terbaru
+        }
+
+        // Fungsi untuk mengarahkan ke halaman edit
+        function editData(index) {
+            // Simpan index ke LocalStorage untuk diakses di halaman edit
+            localStorage.setItem('editIndex', index);
+            // Arahkan pengguna ke halaman edit
+            window.location.href = 'edit_data_pensiun.html';
+        }
+
+        // Looping data dan tambahkan ke tabel
+        dataPensiun.forEach(function(item, index) {
+            const row = table.insertRow();
+            const cellNama = row.insertCell(0);
+            const cellNip = row.insertCell(1);
+            const cellJabatan = row.insertCell(2);
+            const cellTahunPensiun = row.insertCell(3);
+            const cellAksi = row.insertCell(4);
+
+            cellNama.textContent = item.nama;
+            cellNip.textContent = item.nip;
+            cellJabatan.textContent = item.jabatan;
+            cellTahunPensiun.textContent = item.tahun_pensiun;
+
+            // Tombol edit dan hapus
+            const btnEdit = document.createElement('button');
+            btnEdit.textContent = 'Edit';
+            btnEdit.onclick = function() {
+                editData(index);
+            };
+
+            const btnHapus = document.createElement('button');
+            btnHapus.textContent = 'Hapus';
+            btnHapus.style.marginLeft = '10px';
+            btnHapus.onclick = function() {
+                hapusData(index);
+            };
+
+            // Tambahkan tombol ke cellAksi
+            cellAksi.appendChild(btnEdit);
+            cellAksi.appendChild(btnHapus);
+        });
+    </script>
+</body>
+</html>

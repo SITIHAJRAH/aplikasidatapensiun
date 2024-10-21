@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data Pensiun</title>
+    <style>
+        /* CSS untuk Form Input Data Pensiun dengan desain yang lebih menarik */
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Gradasi warna background */
+            background-size: cover;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparansi untuk kotak form */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+            border-radius: 12px;
+            backdrop-filter: blur(8px); /* Efek blur */
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            margin-bottom: 15px;
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);
+            outline: none;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px); /* Efek hover pada tombol */
+        }
+
+        /* Tambahan CSS untuk tombol navigasi yang lebih keren */
+        .nav-button {
+            background-color: #3b5998; /* Warna biru Facebook */
+            margin-top: 10px;
+        }
+
+        .nav-button:hover {
+            background-color: #314d86; /* Warna lebih gelap saat hover */
+        }
+
+        /* Responsive untuk layar kecil */
+        @media (max-width: 480px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            input[type="text"], button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Form Input Data Pensiun</h2>
+        <form id="pensiunForm">
+            <label for="nama">Nama Pegawai:</label>
+            <input type="text" id="nama" name="nama" required>
+
+            <label for="nip">NIP:</label>
+            <input type="text" id="nip" name="nip" required>
+
+            <label for="jabatan">Jabatan:</label>
+            <input type="text" id="jabatan" name="jabatan" required>
+
+            <label for="tahun_pensiun">Tahun Pensiun:</label>
+            <input type="text" id="tahun_pensiun" name="tahun_pensiun" required>
+
+            <button type="submit">Simpan Data</button>
+            <button type="button" class="nav-button" onclick="window.location.href='data_pensiun.html'">Lihat Data Pensiun</button>
+        </form>
+    </div>
+
+    <script>
+        // Ketika form disubmit, simpan data ke LocalStorage
+        document.getElementById('pensiunForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman
+            
+            // Ambil data dari form
+            const nama = document.getElementById('nama').value;
+            const nip = document.getElementById('nip').value;
+            const jabatan = document.getElementById('jabatan').value;
+            const tahun_pensiun = document.getElementById('tahun_pensiun').value;
+
+            // Buat objek data baru
+            const dataBaru = {
+                nama: nama,
+                nip: nip,
+                jabatan: jabatan,
+                tahun_pensiun: tahun_pensiun
+            };
+
+            // Ambil data yang sudah ada di LocalStorage (jika ada)
+            let dataPensiun = JSON.parse(localStorage.getItem('dataPensiun')) || [];
+
+            // Tambahkan data baru ke array
+            dataPensiun.push(dataBaru);
+
+            // Simpan kembali ke LocalStorage
+            localStorage.setItem('dataPensiun', JSON.stringify(dataPensiun));
+
+            // Redirect ke halaman data_pensiun.html
+            window.location.href = 'data_pensiun.html';
+        });
+    </script>
+</body>
+</html>

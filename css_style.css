@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    text-align: center;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+.btn-edit {
+    color: #FFA500;
+}
+
+.btn-delete {
+    color: #FF0000;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input[type="text"], form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.btn-logout {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
